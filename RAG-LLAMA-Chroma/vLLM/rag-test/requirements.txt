@@ -1,0 +1,26 @@
+# Core
+python>=3.9,<3.12
+torch>=2.0.1
+transformers>=4.38.0
+accelerate>=0.27.0
+
+# vLLM (com suporte para ARM/M1)
+vllm>=0.3.3
+
+# LangChain e integrações
+langchain>=0.1.10
+langchain-community>=0.0.20
+langchain-core>=0.1.24
+
+# ChromaDB
+chromadb>=0.4.22
+
+# Embeddings
+sentence-transformers>=2.2.2
+
+# Interface
+gradio>=4.20.0
+
+# Utilitários
+pydantic>=2.5.0
+requests>=2.31.0
