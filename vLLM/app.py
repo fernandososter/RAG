@@ -4,8 +4,9 @@
 import torch
 from langchain_community.llms import VLLM
 import chromadb
+from vllm.entrypoints.openai.api_server import serve
+from vllm.entrypoints.openai.async_api_server import serve 
 import asyncio
-import multiprocessing
 
 
 
@@ -14,42 +15,22 @@ chroma_client = chromadb.Client()
 
 
 
+import multiprocessing
 
 
-# app.py
-import sys
-import uvloop
-from vllm.entrypoints.openai.api_server import run_server
-from vllm.entrypoints.openai.cli_args import make_arg_parser, validate_parsed_serve_args
 
 def main():
-    # monta um parser igual ao CLI do vLLM
-    parser = make_arg_parser()
-
-    # você pode passar os argumentos aqui (ou deixar sys.argv[1:] para usar args de linha de comando)
-    # Exemplo de args programáticos:
-    argv = [
-        "--model", "llama-3-8b-instruct",   # troque para o seu modelo/caminho
-        "--host", "0.0.0.0",
-        "--port", "8000",
-        "--max-num-batched-tokens", "8192",
-        "--max-model-len", "8192",
-        "--served-model-name", "llama3_local",
-        # adicione outros flags que quiser: --api-key, --dtype, --gpu-memory-utilization, etc.
-    ]
-
-    args = parser.parse_args(argv)
-
-    # valida alguns constraints que o vLLM espera
-    validate_parsed_serve_args(args)
-
-    # uvloop.run espera uma coroutine; run_server(args) é a coroutine principal do servidor.
-    try:
-        uvloop.run(run_server(args))
-    except Exception as e:
-        # trate ou re-raise para ver erro
-        raise
-
+    asyncio.run(serve(
+        model="facebook/opt-125m",   # nome ou caminho do modelo
+        host="0.0.0.0",                           # para acesso externo
+        port=8000,                                # porta HTTP
+        max_model_len=8192,
+        tensor_parallel_size=1,
+        gpu_memory_utilization=0.9,
+        api_key=None,                             # opcional
+        served_model_name="llama3" ,               # nome que aparecerá na API
+        chroma_client=chroma_client
+    ))
 
 
 
