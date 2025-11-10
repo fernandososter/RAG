@@ -1,13 +1,14 @@
 import gradio as gr
-from rag_pipeline import get_rag_chain
+import rag_pipeline
 
-def query_rag(question):
-    rag_chain = get_rag_chain()
-    return rag_chain.invoke(question)
+
+import os
+os.environ["TOKENIZERS_PARALLELISM"] = "false"  # Desabilita warnings de multiprocessing
+
 
 if __name__ == "__main__":
     demo = gr.Interface(
-        fn=query_rag,
+        fn=rag_pipeline.query_rag,
         inputs=gr.Textbox(lines=2, placeholder="Digite sua pergunta aqui..."),
         outputs="text",
         title="RAG com vLLM (Servidor Externo)",

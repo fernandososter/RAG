@@ -5,7 +5,7 @@ class ModelManager:
         self.llm = VLLMOpenAI(
             openai_api_key="dummy_key",  # Não é usado, mas obrigatório
             openai_api_base=api_base,
-            model_name="Qwen/Qwen2.5-7B-Instruct",
+            model_name="meta-llama/Llama-3.1-8B-Instruct",
             max_tokens=512,
             temperature=0.7,
         )
