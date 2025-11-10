@@ -1,8 +1,0 @@
-version: "2"
-
-authtoken: 34kNUYwjOKEm3Bn1UMqt8R0hL72_62CR6jMoVTu3PURsXRNoy
-tunnels:
-  rag-api:
-    proto: http
-    addr: 8080
-    inspect: true
